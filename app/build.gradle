@@ -30,7 +30,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
     implementation 'com.google.android.material:material:1.1.0-alpha02'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
@@ -42,4 +42,7 @@ dependencies {
     // Epoxy
     implementation 'com.airbnb.android:epoxy:3.1.0'
     kapt 'com.airbnb.android:epoxy-processor:3.1.0'
+
+    // WebDav Lib for Nextcloud access
+    implementation 'com.thegrizzlylabs.sardine-android:sardine-android:0.3'
 }
