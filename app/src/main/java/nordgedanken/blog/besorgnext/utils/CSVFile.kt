@@ -10,7 +10,7 @@ import java.io.InputStream
 
 data class Dataset(var productName: String, var mainCategory: String, var imageUrl: String)
 
-class CSVFile(var inputStream: InputStream) {
+class CSVFile(private var inputStream: InputStream) {
     private val TAG = CSVFile::class.java.canonicalName
     fun read(): List<Dataset> {
         val resultList = mutableListOf<Dataset>()

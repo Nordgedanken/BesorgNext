@@ -11,7 +11,6 @@ import nordgedanken.blog.besorgnext.utils.CSVFile
  * Created by MTRNord on 05.01.2019.
  */
 class SearchResultsActivity : AppCompatActivity() {
-    val TAG = SearchResultsActivity::class.java.canonicalName
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.item_search_results_page)
