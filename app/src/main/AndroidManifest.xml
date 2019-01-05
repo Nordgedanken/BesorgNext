@@ -26,6 +26,9 @@
                 android:label="@string/settings"/>
         <activity android:name=".NextcloudLogin">
         </activity>
+        <activity
+                android:name=".itemSearchList.SearchResultsActivity"
+                android:label="@string/search"/>
     </application>
 
 </manifest>
