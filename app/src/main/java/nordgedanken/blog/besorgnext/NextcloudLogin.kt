@@ -45,7 +45,7 @@ class NextcloudLogin : AppCompatActivity() {
 private class ViewerWebViewClient : WebViewClient() {
     private val TAG = ViewerWebViewClient::class.java.canonicalName
 
-    @Suppress("OverridingDeprecatedMember")
+    @Suppress("OverridingDeprecatedMember", "DEPRECATION")
     override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
         val uri = URI.create(url)
         if (uri.scheme == "nc") {

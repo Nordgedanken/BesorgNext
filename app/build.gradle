@@ -44,5 +44,7 @@ dependencies {
     kapt 'com.airbnb.android:epoxy-processor:3.1.0'
 
     // WebDav Lib for Nextcloud access
-    implementation 'com.thegrizzlylabs.sardine-android:sardine-android:0.3'
+    implementation ('com.thegrizzlylabs.sardine-android:sardine-android:0.3') {
+        exclude module: 'xpp3'
+    }
 }
