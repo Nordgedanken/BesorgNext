@@ -5,6 +5,7 @@ import android.widget.TextView
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import nordgedanken.blog.besorgnext.GlideApp
 import nordgedanken.blog.besorgnext.R
 import nordgedanken.blog.besorgnext.utils.KotlinEpoxyHolder
@@ -27,9 +28,10 @@ abstract class SearchResultItemModel : EpoxyModelWithHolder<Holder>() {
         holder.productImage.contentDescription = name
         GlideApp.with(holder.productImage)
             .load(url)
-            //.placeholder(placeholder)
+            .placeholder(R.drawable.search_placeholder_image)
+            .transforms(RoundedCorners(5))
             .fitCenter()
-            .into(holder.productImage);
+            .into(holder.productImage)
         holder.category.text = category
     }
 
