@@ -1,12 +1,13 @@
 package nordgedanken.blog.besorgnext.itemSearchList
 
+import android.widget.ImageView
 import android.widget.TextView
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
+import nordgedanken.blog.besorgnext.GlideApp
 import nordgedanken.blog.besorgnext.R
 import nordgedanken.blog.besorgnext.utils.KotlinEpoxyHolder
-
 
 /**
  * Created by MTRNord on 05.01.2019.
@@ -18,8 +19,17 @@ abstract class SearchResultItemModel : EpoxyModelWithHolder<Holder>() {
 
     @EpoxyAttribute
     var category: String? = null
+
+    @EpoxyAttribute
+    var url: String? = null
     override fun bind(holder: Holder) {
         holder.productName.text = name
+        holder.productImage.contentDescription = name
+        GlideApp.with(holder.productImage)
+            .load(url)
+            //.placeholder(placeholder)
+            .fitCenter()
+            .into(holder.productImage);
         holder.category.text = category
     }
 
@@ -31,4 +41,5 @@ abstract class SearchResultItemModel : EpoxyModelWithHolder<Holder>() {
 class Holder : KotlinEpoxyHolder() {
     val productName by bind<TextView>(R.id.product_name)
     val category by bind<TextView>(R.id.category)
+    val productImage by bind<ImageView>(R.id.product_image)
 }

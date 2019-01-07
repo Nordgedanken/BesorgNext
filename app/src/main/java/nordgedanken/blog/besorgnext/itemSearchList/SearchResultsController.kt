@@ -14,6 +14,7 @@ class SearchResultsController : TypedEpoxyController<List<ProductsItem?>>() {
                     id(index)
                     name(value.productName)
                     category(value.categories)
+                    url(value.imageSmallUrl)
                 }
             }
         }
