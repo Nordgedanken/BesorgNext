@@ -19,6 +19,10 @@ abstract class SearchResultItemModel : EpoxyModelWithHolder<Holder>() {
     override fun bind(holder: Holder) {
         holder.productName.text = name
     }
+
+    override fun shouldSaveViewState(): Boolean {
+        return true
+    }
 }
 
 class Holder : KotlinEpoxyHolder() {

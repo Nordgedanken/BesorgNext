@@ -16,17 +16,14 @@ class CSVFile(private var inputStream: InputStream) {
         val resultList = mutableListOf<Dataset>()
         try {
             val reader = inputStream.bufferedReader()
-            var line: String?
-            line = reader.readLine()
-            while (reader.readLine() != null) {
-                val row = line?.split(",")!!
+            reader.forEachLine {
+                val row = it.split(",")
                 val dataset = Dataset(
                     row[0],
                     row[1],
                     row[2]
                 )
                 resultList.add(dataset)
-                line = reader.readLine()
             }
             reader.close()
         } catch (e:Exception){
