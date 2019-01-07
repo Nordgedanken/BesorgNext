@@ -43,11 +43,14 @@ class SearchResultsActivity : AppCompatActivity() {
 
     inner class Search : AsyncTask<String, Any, List<ProductsItem?>>() {
         override fun doInBackground(vararg params: String?): List<ProductsItem?> {
+            val queryProduct = ProductsItem(productName = params.first()!!.capitalize())
             val request = OpenFoodFactsApi.service.getProduct(params.first()!!).execute()
             if (request.isSuccessful) {
-                return request.body()?.products!!
+                val products = request.body()?.products?.toMutableList()
+                products?.add(0, queryProduct)
+                return products?.toList()!!
             }
-            return emptyList()
+            return listOf(queryProduct)
         }
 
         override fun onPostExecute(result: List<ProductsItem?>?) {

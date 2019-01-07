@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -18,14 +19,27 @@ import nordgedanken.blog.besorgnext.settings.SettingsActivity
 class MainActivity : AppCompatActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        val searchView = findViewById<SearchView>(R.id.search_view)
         when (item.itemId) {
             R.id.navigation_lists -> {
+                searchView.animate()
+                    .alpha(1.0f)
+                    .translationY(0F)
+                    .withStartAction {searchView.visibility = View.VISIBLE  }.duration = 300
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
+                searchView.animate()
+                    .alpha(0.0f)
+                    .translationY(-searchView.height.toFloat())
+                    .withEndAction { searchView.visibility = View.GONE }.duration = 300
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
+                searchView.animate()
+                    .alpha(0.0f)
+                    .translationY(-searchView.height.toFloat())
+                    .withEndAction { searchView.visibility = View.GONE }.duration = 300
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -36,11 +50,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main_actionbar, menu)
-        // Associate searchable configuration with the SearchView
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        (menu.findItem(R.id.action_search).actionView as SearchView).apply {
-            setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        }
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -71,6 +80,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
+
+        // Associate searchable configuration with the SearchView
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        (findViewById<SearchView>(R.id.search_view)).apply {
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        }
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }

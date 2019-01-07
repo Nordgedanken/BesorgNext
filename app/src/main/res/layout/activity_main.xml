@@ -15,6 +15,17 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize" />
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view"
+            style="@android:style/Widget.Material.Light.SearchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/search_background"
+            android:elevation="15dp"
+            app:iconifiedByDefault="false"
+            tools:layout_editor_absoluteX="8dp" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +33,7 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <!-- contetn -->
+        <!-- Content -->
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/navigation"
