@@ -19,3 +19,5 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keep class br.com.mauker.MsvAuthority
+-keepclassmembers class br.com.mauker.** { *; }

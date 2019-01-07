@@ -21,20 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayout"
-                android:transitionName="searchLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/search"
-                    android:focusableInTouchMode="false"
-                    android:editable="false"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
+        <!-- contetn -->
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/navigation"

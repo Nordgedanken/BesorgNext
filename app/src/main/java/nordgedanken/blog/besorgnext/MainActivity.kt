@@ -1,32 +1,31 @@
 package nordgedanken.blog.besorgnext
 
 import android.app.ActivityOptions
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
-import nordgedanken.blog.besorgnext.itemSearchList.SearchResultsActivity
 import nordgedanken.blog.besorgnext.settings.SettingsActivity
+
 
 class MainActivity : AppCompatActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_lists -> {
-                inputLayout.visibility = View.VISIBLE
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
-                inputLayout.visibility = View.GONE
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
-                inputLayout.visibility = View.GONE
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -37,7 +36,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main_actionbar, menu)
-        return true
+        // Associate searchable configuration with the SearchView
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        (menu.findItem(R.id.action_search).actionView as SearchView).apply {
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        }
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
@@ -69,14 +73,5 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        search.setOnClickListener {
-            val intent = Intent(this, SearchResultsActivity::class.java)
-            // create the transition animation - the images in the layouts
-            // of both activities are defined with android:transitionName="robot"
-            val options = ActivityOptions
-                .makeSceneTransitionAnimation(this, search, "searchInput")
-            // start the new activity
-            startActivity(intent, options.toBundle())
-        }
     }
 }
