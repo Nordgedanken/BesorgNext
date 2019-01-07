@@ -45,6 +45,10 @@ dependencies {
 
     implementation "org.jetbrains.anko:anko-commons:0.10.6" // Helpers
 
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0' // HTTP API
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0' // HTTP to Json Converter
+    implementation 'com.google.code.gson:gson:2.8.5' // Json lib
+
     // WebDav Lib for Nextcloud access
     implementation ('com.thegrizzlylabs.sardine-android:sardine-android:0.3') {
         exclude module: 'xpp3'

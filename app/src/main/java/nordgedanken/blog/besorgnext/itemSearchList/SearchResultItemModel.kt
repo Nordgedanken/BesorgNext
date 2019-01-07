@@ -16,8 +16,11 @@ abstract class SearchResultItemModel : EpoxyModelWithHolder<Holder>() {
     @EpoxyAttribute
     var name: String? = null
 
+    @EpoxyAttribute
+    var category: String? = null
     override fun bind(holder: Holder) {
         holder.productName.text = name
+        holder.category.text = category
     }
 
     override fun shouldSaveViewState(): Boolean {
@@ -27,4 +30,5 @@ abstract class SearchResultItemModel : EpoxyModelWithHolder<Holder>() {
 
 class Holder : KotlinEpoxyHolder() {
     val productName by bind<TextView>(R.id.product_name)
+    val category by bind<TextView>(R.id.category)
 }
