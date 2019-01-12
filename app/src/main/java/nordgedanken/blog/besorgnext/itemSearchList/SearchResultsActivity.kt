@@ -18,7 +18,7 @@ class SearchResultsActivity : AppCompatActivity() {
     private val TAG = SearchResultsActivity::class.java.canonicalName
 
     private var recyclerView: EpoxyRecyclerView? = null
-    private val searchResultsController by lazy { SearchResultsController() }
+    private val searchResultsController by lazy { SearchResultsController(this@SearchResultsActivity) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.item_search_results_page)

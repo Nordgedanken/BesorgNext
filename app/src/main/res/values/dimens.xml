@@ -2,4 +2,9 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="shrine_toolbar_offset_start">124dp</dimen>
+    <dimen name="shrine_toolbar_offset_top">124dp</dimen>
+    <dimen name="shrine_toolbar_image_offset_top">48dp</dimen>
 </resources>

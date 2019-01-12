@@ -6,17 +6,23 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import nordgedanken.blog.besorgnext.nextcloud.Data
+import nordgedanken.blog.besorgnext.nextcloud.WebDav
+import nordgedanken.blog.besorgnext.nextcloud.json.JsonData
 import nordgedanken.blog.besorgnext.settings.SettingsActivity
 
 
 class MainActivity : AppCompatActivity() {
+    private val TAG = MainActivity::class.java.canonicalName
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         val searchView = findViewById<SearchView>(R.id.search_view)
@@ -88,5 +94,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+        // Init Data TODO trigger login
+        if (WebDav.password != null && WebDav.server != null && WebDav.username != null) {
+            Data.filesDir = this.filesDir
+            Data.syncNextcloud()
+            Data.data.observe(this, Observer<JsonData>{
+                Log.d(TAG, "WE GOT DATA SYNCED!")
+                // TODO display data
+            })
+        } else {
+            // TODO transition to login
+        }
     }
 }

@@ -16,10 +16,10 @@ object OpenFoodFactsApi {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    var service = retrofit.create<OpenFoodFactsService>(OpenFoodFactsService::class.java)
+    val service = retrofit.create<OpenFoodFactsService>(OpenFoodFactsService::class.java)!!
 }
 
 interface OpenFoodFactsService {
-    @GET("cgi/search.pl?search_simple=1&json=1&action=process&fields=categories,image_small_url,product_name,brands,quantity,code,nutrition_grade_fr}")
+    @GET("cgi/search.pl?search_simple=1&json=1&action=process&fields=image_url,categories,image_small_url,product_name,brands,quantity,code,nutrition_grade_fr}")
     fun getProduct(@Query("search_terms") product: String): Call<Products>
 }

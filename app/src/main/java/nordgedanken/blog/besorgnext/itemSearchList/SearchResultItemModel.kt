@@ -1,6 +1,8 @@
 package nordgedanken.blog.besorgnext.itemSearchList
 
+import android.view.View
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
@@ -23,6 +25,10 @@ abstract class SearchResultItemModel : EpoxyModelWithHolder<Holder>() {
 
     @EpoxyAttribute
     var url: String? = null
+
+    @EpoxyAttribute
+    var longClickListener: View.OnLongClickListener? = null
+
     override fun bind(holder: Holder) {
         holder.productName.text = name
         holder.productImage.contentDescription = name
@@ -30,9 +36,10 @@ abstract class SearchResultItemModel : EpoxyModelWithHolder<Holder>() {
             .load(url)
             .placeholder(R.drawable.search_placeholder_image)
             .transforms(RoundedCorners(5))
-            .fitCenter()
+            //.fitCenter()
             .into(holder.productImage)
         holder.category.text = category
+        holder.topLayout.setOnLongClickListener(longClickListener)
     }
 
     override fun shouldSaveViewState(): Boolean {
@@ -41,6 +48,7 @@ abstract class SearchResultItemModel : EpoxyModelWithHolder<Holder>() {
 }
 
 class Holder : KotlinEpoxyHolder() {
+    val topLayout by bind<RelativeLayout>(R.id.top_layout)
     val productName by bind<TextView>(R.id.product_name)
     val category by bind<TextView>(R.id.category)
     val productImage by bind<ImageView>(R.id.product_image)
