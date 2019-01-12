@@ -12,8 +12,10 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import nordgedanken.blog.besorgnext.nextcloud.Data
 import nordgedanken.blog.besorgnext.nextcloud.WebDav
@@ -56,6 +58,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main_actionbar, menu)
+        clearFocusFix()
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -82,6 +85,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        Log.d(TAG, "RESUME")
+        clearFocusFix()
+    }
+
+    private fun clearFocusFix() {
+        val searchView = findViewById<SearchView>(R.id.search_view)
+        val rootView = findViewById<CoordinatorLayout>(R.id.content)
+        searchView.setQuery("", false)
+        searchView.clearFocus()
+        rootView.requestFocus()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -96,7 +114,7 @@ class MainActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         // Init Data TODO trigger login
-        if (WebDav.password != null && WebDav.server != null && WebDav.username != null) {
+        if (WebDav.password != null || WebDav.server != null || WebDav.username != null) {
             Data.filesDir = this.filesDir
             Data.syncNextcloud()
             Data.data.observe(this, Observer<JsonData>{
@@ -104,7 +122,9 @@ class MainActivity : AppCompatActivity() {
                 // TODO display data
             })
         } else {
-            // TODO transition to login
+            val contextView = findViewById<CoordinatorLayout>(R.id.content)
+            Snackbar.make(contextView, R.string.login_required, Snackbar.LENGTH_LONG)
+                .show()
         }
     }
 }
