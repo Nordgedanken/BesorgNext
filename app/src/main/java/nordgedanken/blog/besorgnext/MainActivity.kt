@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -94,7 +95,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun clearFocusFix() {
         val searchView = findViewById<SearchView>(R.id.search_view)
-        val rootView = findViewById<CoordinatorLayout>(R.id.content)
+        val rootView = findViewById<ConstraintLayout>(R.id.content)
         searchView.setQuery("", false)
         searchView.clearFocus()
         rootView.requestFocus()
@@ -122,7 +123,7 @@ class MainActivity : AppCompatActivity() {
                 // TODO display data
             })
         } else {
-            val contextView = findViewById<CoordinatorLayout>(R.id.content)
+            val contextView = findViewById<CoordinatorLayout>(R.id.snackbar_holder)
             Snackbar.make(contextView, R.string.login_required, Snackbar.LENGTH_LONG)
                 .show()
         }
