@@ -16,4 +16,5 @@
     <string name="Login_password_hint">Nextcloud Passwort</string>
     <string name="missing_fields_message">Bitte fülle erst alle Felder aus!</string>
     <string name="ok">Ok</string>
+    <string name="app_intro_image_content_description">grafik</string>
 </resources>

@@ -17,4 +17,5 @@
     <string name="title_activity_item_detail" translatable="false">ItemDetailActivity</string>
     <string name="missing_fields_message">Please fill all fields first!</string>
     <string name="ok">Ok</string>
+    <string name="app_intro_image_content_description">graphics</string>
 </resources>

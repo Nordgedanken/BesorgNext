@@ -8,8 +8,6 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.github.paolorotolo.appintro.AppIntro
-import com.github.paolorotolo.appintro.AppIntroFragment
-import com.github.paolorotolo.appintro.model.SliderPage
 
 /**
  * Created by MTRNord on 12.01.2019.
@@ -23,24 +21,24 @@ class IntroActivity : AppIntro() {
         // Note here that we DO NOT use setContentView();
 
         // First Page
-        val firstPage = SliderPage()
+        val firstPage = SliderPageLottie()
+        firstPage.animationRaw = R.raw.favourite_app_icon
         firstPage.title = getString(R.string.welcome)
         firstPage.description = getString(R.string.welcome_text)
         //sliderPage.bgColor = Color.parseColor()
-        addSlide(AppIntroFragment.newInstance(firstPage))
+        addSlide(AppIntroFragmentLottie.newInstance(firstPage))
 
         // Login Page
         addSlide(LoginSlide.newInstance())
 
         // Done Page
-        val donePage = SliderPage()
+        val donePage = SliderPageLottie()
         donePage.title = getString(R.string.finished)
+        donePage.animationRaw = R.raw.check_mark
         donePage.description = getString(R.string.done_text)
         //sliderPage.bgColor = Color.parseColor()
-        addSlide(AppIntroFragment.newInstance(donePage))
+        addSlide(AppIntroFragmentLottie.newInstance(donePage))
 
-        // OPTIONAL METHODS
-        // Override bar/separator color.
         setBarColor(Color.parseColor("#3F51B5"))
         setSeparatorColor(Color.parseColor("#2196F3"))
 
