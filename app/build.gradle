@@ -6,6 +6,10 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'io.fabric'
+
+apply plugin: 'com.google.firebase.firebase-perf'
+
 kapt {
     correctErrorTypes = true
 }
@@ -64,4 +68,9 @@ dependencies {
     implementation  'com.github.nextcloud:android-library:-SNAPSHOT'
 
     implementation 'com.airbnb.android:lottie:3.0.0-beta1' // Animations
+
+    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.8'
+    implementation 'com.google.firebase:firebase-perf:16.2.3'
 }
+apply plugin: 'com.google.gms.google-services'

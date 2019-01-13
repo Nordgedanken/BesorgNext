@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "676783672654",
+    "firebase_url": "https://besorgnext.firebaseio.com",
+    "project_id": "besorgnext",
+    "storage_bucket": "besorgnext.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676783672654:android:485b9fb8455d4be0",
+        "android_client_info": {
+          "package_name": "nordgedanken.blog.besorgnext"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "676783672654-h4ae331gplp8mtmtoe3ca08gj8setd63.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nordgedanken.blog.besorgnext",
+            "certificate_hash": "e62547f8ad8962ddf209eb900d6316290a5de00e"
+          }
+        },
+        {
+          "client_id": "676783672654-uek0q7vlpdaqvc3vdn7m0d434g4la5rh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCObHn6seZWjeAwycUagQPQgEcTzstB7rI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "676783672654-uek0q7vlpdaqvc3vdn7m0d434g4la5rh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
