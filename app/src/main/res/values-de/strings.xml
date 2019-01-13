@@ -10,9 +10,10 @@
     <string name="welcome">Willkommen!</string>
     <string name="welcome_text">Willkommen zu BesorgNext! Eine App, die Nexcloud nutzt um eine Einkaufsliste zu erstellen</string>
     <string name="Login_server_hint">Nextcloud Serveradresse</string>
-    <string name="login_button">Anmelden</string>
     <string name="finished">Du bist fertig!</string>
     <string name="done_text">Drücke den Fertig Knopf um die Anwendung zu starten!</string>
     <string name="Login_username_hint">Nextcloud Benutzername</string>
     <string name="Login_password_hint">Nextcloud Passwort</string>
+    <string name="missing_fields_message">Bitte fülle erst alle Felder aus!</string>
+    <string name="ok">Ok</string>
 </resources>

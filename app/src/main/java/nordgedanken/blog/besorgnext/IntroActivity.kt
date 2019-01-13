@@ -5,13 +5,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.github.paolorotolo.appintro.AppIntro
 import com.github.paolorotolo.appintro.AppIntroFragment
-import com.github.paolorotolo.appintro.ISlideSelectionListener
 import com.github.paolorotolo.appintro.model.SliderPage
 
 /**
@@ -19,43 +16,6 @@ import com.github.paolorotolo.appintro.model.SliderPage
  */
 class IntroActivity : AppIntro() {
     private val TAG = IntroActivity::class.java.canonicalName
-
-    private fun updatePagerIndicatorState() {
-        if (indicatorContainer != null) {
-            if (pagerIndicatorEnabled) {
-                indicatorContainer.visibility = View.VISIBLE
-            } else {
-                indicatorContainer.visibility = View.INVISIBLE
-            }
-        }
-    }
-
-    private fun handleSlideChanged(oldFragment: Fragment?, newFragment: Fragment?) {
-        // Check if oldFragment implements ISlideSelectionListener - unnecessary null check
-        if (oldFragment is ISlideSelectionListener) {
-            (oldFragment as ISlideSelectionListener).onSlideDeselected()
-        }
-
-        // Check if newFragment implements ISlideSelectionListener - unnecessary null check
-        if (newFragment is ISlideSelectionListener) {
-            (newFragment as ISlideSelectionListener).onSlideSelected()
-        }
-
-        onSlideChanged(oldFragment, newFragment)
-        updatePagerIndicatorState()
-    }
-
-    private fun changeSlide(isLastSlide: Boolean) {
-        if (isLastSlide) {
-            val currentFragment = mPagerAdapter.getItem(pager.currentItem)
-            handleSlideChanged(currentFragment, null)
-            onDonePressed(currentFragment)
-        } else {
-            pager.goToNextSlide()
-            @Suppress("DEPRECATION")
-            onNextPressed()
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,11 +30,7 @@ class IntroActivity : AppIntro() {
         addSlide(AppIntroFragment.newInstance(firstPage))
 
         // Login Page
-        addSlide(SlideHelper.newInstance(R.layout.login_start) {
-            Log.d(TAG, "callback")
-            setButtonState(nextButton, true)
-            changeSlide(false)
-        })
+        addSlide(LoginSlide.newInstance())
 
         // Done Page
         val donePage = SliderPage()
@@ -90,14 +46,8 @@ class IntroActivity : AppIntro() {
 
         // Hide Skip/Done button.
         showSkipButton(false)
-    }
-
-    override fun onSlideChanged(oldFragment: Fragment?, newFragment: Fragment?) {
-        super.onSlideChanged(oldFragment, newFragment)
-        if (newFragment is SlideHelper) {
-            setButtonState(nextButton, false)
-            this.setNextPageSwipeLock(true)
-        }
+        wizardMode = true
+        setProgressButtonEnabled(true)
     }
 
     override fun onDonePressed(currentFragment: Fragment?) {

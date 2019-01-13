@@ -26,6 +26,7 @@ object Data {
     var filesDir: File? = null
     private val localSaveFile by lazy{ File(filesDir!!, "data.json") }
     val data: MutableLiveData<JsonData> = MutableLiveData()
+    var dataNM: JsonData? = null // Needed as the LiveData might not be there yet. The livedata and this should be synced
 
     private fun checkIfFileExists() {
         if(!localSaveFile.exists()) {
@@ -36,6 +37,7 @@ object Data {
     }
 
     private fun saveDataToDiskInternal(data: JsonData) {
+        dataNM = data
         FileWriter(localSaveFile).use { writer ->
             gson.toJson(data, writer)
         }
@@ -43,13 +45,16 @@ object Data {
 
     private fun saveDataToDisk() {
         checkIfFileExists()
-        saveDataToDiskInternal(data.value!!)
+        saveDataToDiskInternal(dataNM!!)
     }
 
     private fun getDataFromDisk() {
         checkIfFileExists()
         val bufferedReader = BufferedReader(FileReader(localSaveFile))
-        data.postValue(gson.fromJson(bufferedReader, JsonData::class.java))
+        val jsondata = gson.fromJson(bufferedReader, JsonData::class.java)
+        dataNM = jsondata
+        data.postValue(dataNM)
+
     }
 
     private fun uploadToNextcloud() {

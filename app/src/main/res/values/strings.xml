@@ -10,9 +10,11 @@
     <string name="welcome">Welcome!</string>
     <string name="welcome_text">Welcome to BesorgNext! An App using Nextcloud to allow you to make a Shopping List</string>
     <string name="Login_server_hint">Nextcloud server domain</string>
-    <string name="login_button">Login</string>
     <string name="finished">You are done!</string>
     <string name="done_text">Press the Done Button to start the App!</string>
     <string name="Login_password_hint">Nextcloud Password</string>
     <string name="Login_username_hint">Nextcloud Username</string>
+    <string name="title_activity_item_detail" translatable="false">ItemDetailActivity</string>
+    <string name="missing_fields_message">Please fill all fields first!</string>
+    <string name="ok">Ok</string>
 </resources>
