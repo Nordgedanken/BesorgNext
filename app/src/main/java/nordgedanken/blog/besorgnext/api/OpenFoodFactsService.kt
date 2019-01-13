@@ -16,7 +16,7 @@ object OpenFoodFactsApi {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val service = retrofit.create<OpenFoodFactsService>(OpenFoodFactsService::class.java)!!
+    val service = retrofit.create<OpenFoodFactsService>(OpenFoodFactsService::class.java)
 }
 
 interface OpenFoodFactsService {

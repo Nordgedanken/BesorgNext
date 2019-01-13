@@ -37,24 +37,24 @@ class SearchResultsActivity : AppCompatActivity() {
     private fun handleIntent(intent: Intent) {
         if (Intent.ACTION_SEARCH == intent.action) {
             val query = intent.getStringExtra(SearchManager.QUERY)
-            Search().execute(query)
+            Search(searchResultsController).execute(query)
         }
     }
+}
 
-    inner class Search : AsyncTask<String, Any, List<ProductsItem?>>() {
-        override fun doInBackground(vararg params: String?): List<ProductsItem?> {
-            val queryProduct = ProductsItem(productName = params.first()!!.capitalize())
-            val request = OpenFoodFactsApi.service.getProduct(params.first()!!).execute()
-            if (request.isSuccessful) {
-                val products = request.body()?.products?.toMutableList()
-                products?.add(0, queryProduct)
-                return products?.toList()!!
-            }
-            return listOf(queryProduct)
+class Search(private val searchResultsController: SearchResultsController) : AsyncTask<String, Any, List<ProductsItem?>>() {
+    override fun doInBackground(vararg params: String?): List<ProductsItem?> {
+        val queryProduct = ProductsItem(productName = params.first()!!.capitalize())
+        val request = OpenFoodFactsApi.service.getProduct(params.first()!!).execute()
+        if (request.isSuccessful) {
+            val products = request.body()?.products?.toMutableList()
+            products?.add(0, queryProduct)
+            return products?.toList()!!
         }
+        return listOf(queryProduct)
+    }
 
-        override fun onPostExecute(result: List<ProductsItem?>?) {
-            searchResultsController.setData(result)
-        }
+    override fun onPostExecute(result: List<ProductsItem?>?) {
+        searchResultsController.setData(result)
     }
 }

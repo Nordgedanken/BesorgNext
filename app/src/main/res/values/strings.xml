@@ -1,20 +1,18 @@
 <resources>
-    <string name="app_name">Besorg Next!</string>
+    <string name="app_name" translatable="false">Besorg Next!</string>
     <string name="title_lists">Lists</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="settings">Settings</string>
     <string name="search">Search</string>
     <string name="search_hint">Add Item</string>
-    <string name="title_activity_item_detail">ItemDetailActivity</string>
-    <string name="login_required">You are required to login into Nextcloud</string>
     <string name="app_intro">Intro</string>
     <string name="welcome">Welcome!</string>
-    <string name="welcome_text">Welcome to BesorgNext! A App using Nextcloud to allow you to make a Shopping List</string>
-    <string name="Login_server_hint">Input Nextcloud server domain</string>
+    <string name="welcome_text">Welcome to BesorgNext! An App using Nextcloud to allow you to make a Shopping List</string>
+    <string name="Login_server_hint">Nextcloud server domain</string>
     <string name="login_button">Login</string>
     <string name="finished">You are done!</string>
     <string name="done_text">Press the Done Button to start the App!</string>
-    <string name="Login_username_hint">Input Nextcloud Username</string>
-    <string name="Login_password_hint">Input Nextcloud password</string>
+    <string name="Login_password_hint">Nextcloud Password</string>
+    <string name="Login_username_hint">Nextcloud Username</string>
 </resources>
