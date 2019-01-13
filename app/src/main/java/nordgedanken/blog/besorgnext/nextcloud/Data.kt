@@ -1,10 +1,16 @@
 package nordgedanken.blog.besorgnext.nextcloud
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.owncloud.android.lib.common.OwnCloudClient
+import com.owncloud.android.lib.resources.files.*
+import com.owncloud.android.lib.resources.files.model.RemoteFile
 import nordgedanken.blog.besorgnext.nextcloud.json.JsonData
-import java.io.*
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileReader
+import java.io.FileWriter
 import java.util.*
 
 
@@ -12,69 +18,91 @@ import java.util.*
  * Created by MTRNord on 12.01.2019.
  */
 object Data {
+    private val TAG = Data::class.java.canonicalName
+    var mClient: OwnCloudClient? = null
+
+    val gson = GsonBuilder().serializeNulls().create()
+
     var filesDir: File? = null
-    private val localSaveFile = File(filesDir!!, "data.json")
+    private val localSaveFile by lazy{ File(filesDir!!, "data.json") }
     val data: MutableLiveData<JsonData> = MutableLiveData()
 
-    private fun saveDataToDisk() {
+    private fun checkIfFileExists() {
+        if(!localSaveFile.exists()) {
+            Log.d(TAG, "DOES NOT EXIST")
+            localSaveFile.createNewFile()
+            saveDataToDiskInternal(JsonData())
+        }
+    }
+
+    private fun saveDataToDiskInternal(data: JsonData) {
         FileWriter(localSaveFile).use { writer ->
-            val gson = GsonBuilder().create()
             gson.toJson(data, writer)
         }
     }
 
+    private fun saveDataToDisk() {
+        checkIfFileExists()
+        saveDataToDiskInternal(data.value!!)
+    }
+
     private fun getDataFromDisk() {
+        checkIfFileExists()
         val bufferedReader = BufferedReader(FileReader(localSaveFile))
-        val gson = Gson()
-        data.value = gson.fromJson(bufferedReader, JsonData::class.java)
+        data.postValue(gson.fromJson(bufferedReader, JsonData::class.java))
     }
 
     private fun uploadToNextcloud() {
-        val sardine = WebDav.sardine
-        val dirPathBuilder = WebDav.davBaseAddress?.newBuilder()
-        dirPathBuilder?.addPathSegment("besorg_next")
-        val filePathBuilder = dirPathBuilder?.build()?.newBuilder()
-        filePathBuilder?.addPathSegment("data.json")
-        if (!sardine.exists(dirPathBuilder?.build()?.toString())) {
-            sardine.createDirectory(dirPathBuilder?.build()?.toString())
+        val dirPath = "besorg_next"
+        val filePath = "besorg_next/data.json"
+        val existenceOperation = ExistenceCheckRemoteOperation(dirPath, false)
+        val existsResult = existenceOperation.execute(mClient)
+        if (!existsResult.isSuccess) {
+            val folderCreationOperation = CreateFolderRemoteOperation(dirPath, true)
+            folderCreationOperation.execute(mClient)
         }
-        sardine.put(filePathBuilder?.build().toString(), localSaveFile, "application/json")
+        checkIfFileExists()
+        val uploadOperation = UploadFileRemoteOperation(localSaveFile.absolutePath, filePath, "application/json", Date().time.toString())
+        uploadOperation.execute(mClient)
     }
 
     private fun downloadFromNextcloud(): Boolean{
-        val sardine = WebDav.sardine
-        val dirPathBuilder = WebDav.davBaseAddress?.newBuilder()
-        dirPathBuilder?.addPathSegment("besorg_next")
-        val filePathBuilder = dirPathBuilder?.build()?.newBuilder()
-        filePathBuilder?.addPathSegment("data.json")
-        if (!sardine.exists(dirPathBuilder?.build()?.toString())) {
+        val dirPath = "besorg_next"
+        val filePath = "besorg_next/data.json"
+        val dirExistenceOperation = ExistenceCheckRemoteOperation(dirPath, false)
+        val dirExistsResult = dirExistenceOperation.execute(mClient)
+        if (!dirExistsResult.isSuccess) {
             return false
         }
-        if (!sardine.exists(filePathBuilder?.build()?.toString())) {
+        val fileExistenceOperation = ExistenceCheckRemoteOperation(filePath, false)
+        val fileExistsResult = fileExistenceOperation.execute(mClient)
+        if (!fileExistsResult.isSuccess) {
             return false
         }
-        val input = sardine.get(filePathBuilder?.build().toString())
-        val reader = InputStreamReader(input)
-        val gson = Gson()
-        data.value = gson.fromJson(reader, JsonData::class.java)
+        val downloadFileOperation = DownloadFileRemoteOperation(filePath, localSaveFile.absolutePath)
+        downloadFileOperation.execute(mClient)
+        getDataFromDisk()
         return true
     }
 
     private fun checkDataOnNextcloud(): Pair<Boolean, Date?> {
-        val sardine = WebDav.sardine
-        val dirPathBuilder = WebDav.davBaseAddress?.newBuilder()
-        dirPathBuilder?.addPathSegment("besorg_next")
-        val filePathBuilder = dirPathBuilder?.build()?.newBuilder()
-        filePathBuilder?.addPathSegment("data.json")
-        if (!sardine.exists(dirPathBuilder?.build()?.toString())) {
+        val dirPath = "besorg_next"
+        val filePath = "besorg_next/data.json"
+        val dirExistenceOperation = ExistenceCheckRemoteOperation(dirPath, false)
+        val dirExistsResult = dirExistenceOperation.execute(mClient)
+        if (!dirExistsResult.isSuccess) {
             return Pair(false, null)
         }
-        if (!sardine.exists(filePathBuilder?.build()?.toString())) {
+        val fileExistenceOperation = ExistenceCheckRemoteOperation(filePath, false)
+        val fileExistsResult = fileExistenceOperation.execute(mClient)
+        if (!fileExistsResult.isSuccess) {
             return Pair(false, null)
         }
-        val infos = sardine.list(filePathBuilder?.build().toString(), 0)
-        if (infos.size >= 1) {
-            return Pair(true, infos[0].modified)
+        val readFileOperation = ReadFileRemoteOperation(filePath)
+        val readFileResult = readFileOperation.execute(mClient)
+        if (readFileResult.isSuccess) {
+            val file = readFileResult.data[0] as RemoteFile
+            return Pair(true, Date(file.modifiedTimestamp))
         }
         return Pair(false, null)
     }

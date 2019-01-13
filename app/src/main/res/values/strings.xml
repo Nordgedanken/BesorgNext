@@ -8,4 +8,13 @@
     <string name="search_hint">Add Item</string>
     <string name="title_activity_item_detail">ItemDetailActivity</string>
     <string name="login_required">You are required to login into Nextcloud</string>
+    <string name="app_intro">Intro</string>
+    <string name="welcome">Welcome!</string>
+    <string name="welcome_text">Welcome to BesorgNext! A App using Nextcloud to allow you to make a Shopping List</string>
+    <string name="Login_server_hint">Input Nextcloud server domain</string>
+    <string name="login_button">Login</string>
+    <string name="finished">You are done!</string>
+    <string name="done_text">Press the Done Button to start the App!</string>
+    <string name="Login_username_hint">Input Nextcloud Username</string>
+    <string name="Login_password_hint">Input Nextcloud password</string>
 </resources>
