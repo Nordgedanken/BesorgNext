@@ -150,7 +150,7 @@ class MainActivity : AppCompatActivity() {
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
         }
 
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        findViewById<BottomNavigationView>(R.id.navigation).setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         // Init Data TODO trigger login
         if (WebDav.password != null && WebDav.server != null && WebDav.username != null) {
